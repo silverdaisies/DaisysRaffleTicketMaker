@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website AutoMaker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="user-info">
+                <div class="avatar-container">
+                    <img id="user-avatar" src="default-avatar.png" alt="User Avatar">
+                </div>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+        </header>
+
+        <main>
+            <div class="controls">
+                <select id="option-select">
+                    <option value="">Select an option</option>
+                    <option value="raffle">Make Raffle Ticket List</option>
+                    <option value="spender-circles">Spender Circles</option>
+                    <option value="draw-winners">Draw For Winners</option>
+                </select>
+            </div>
+
+            <div class="content-boxes">
+                <div class="input-box">
+                    <h3>Input Content</h3>
+                    <textarea id="input-content" placeholder="Paste your content here..."></textarea>
+                    <div class="raffle-options" id="raffle-options" style="display: none;">
+                        <div class="color-inputs">
+                            <input type="color" id="color1" value="#000000">
+                            <input type="color" id="color2" value="#000000">
+                        </div>
+                        <div class="ticket-value">
+                            <label for="ticket-value">Ticket Value:</label>
+                            <input type="number" id="ticket-value" value="10000">
+                        </div>
+                        <div class="additional-tickets" style="margin-top: 15px;">
+                            <h4>Add Additional Tickets (Optional)</h4>
+                            <textarea id="raffle-additional-input" placeholder="Enter additional tickets here (Format: Username / Value / Ticket Amount / Timestamp / Flag)" rows="4" style="width: 100%;"></textarea>
+                            <p class="instruction-text">Format: Username / Value / Ticket Amount / Timestamp / Flag (use / to separate, spaces around / are optional). Value and Timestamp can be left empty. If Value is empty, it's treated as 0. If Timestamp or Flag are empty, they are treated as NA. Flag can be a number 1-5.</p>
+                        </div>
+                        <button id="copy-raffle-spreadsheet" style="margin-top: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer;">Copy for Spreadsheet</button>
+                    </div>
+                    <div class="spender-circles-options" id="spender-circles-options" style="display: none;">
+                        <div class="ticket-value">
+                            <label for="spender-circle-ticket-value">Spender Circle Ticket Value:</label>
+                            <input type="number" id="spender-circle-ticket-value" value="100000">
+                        </div>
+                        <div class="color-inputs" style="margin-top: 15px;">
+                            <label>Colors:</label>
+                            <input type="color" id="spender-color1" value="#000000">
+                            <input type="color" id="spender-color2" value="#000000">
+                        </div>
+                        <div class="additional-tickets" style="margin-top: 15px;">
+                            <h4>Add Additional Tickets (Optional)</h4>
+                            <textarea id="spender-additional-input" placeholder="Enter additionally spent value here (Format: Username / Value / Ticket Amount / Timestamp / Flag)" rows="4" style="width: 100%;"></textarea>
+                            <p class="instruction-text">Format: Username / Value / Ticket Amount / Timestamp / Flag (use / to separate, spaces around / are optional). Value and Timestamp can be left empty. If Value is empty, it's treated as 0. If Timestamp or Flag are empty, they are treated as NA. Flag can be a number 1-5.</p>
+                        </div>
+                        <button id="copy-spender-spreadsheet" style="margin-top: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer;">Copy for Spreadsheet</button>
+                    </div>
+                </div>
+
+                <div class="output-box">
+                    <h3>Output</h3>
+                    <div id="output-content"></div>
+                </div>
+            </div>
+
+            <div class="draw-winners-options" id="draw-winners-options" style="display: none;">
+                <h4>Draw For Winners</h4>
+                <div class="input-group">
+                    <label for="ticket-list-bbcode">BBCode Ticket List:</label>
+                    <textarea id="ticket-list-bbcode" placeholder="Paste BBCode ticket list here..." rows="10" style="width: 100%;"></textarea>
+                </div>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label for="prizes-list">Prizes List:</label>
+                    <textarea id="prizes-list" placeholder="Enter prizes, one per line..." rows="5" style="width: 100%;"></textarea>
+                </div>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label for="winning-numbers-list">Winning Numbers:</label>
+                    <textarea id="winning-numbers-list" placeholder="Enter winning numbers, comma or space separated..." rows="3" style="width: 100%;"></textarea>
+                </div>
+                <button id="copy-winners-output" style="margin-top: 10px; background-color: #007bff; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer;">Copy Winners List</button>
+                <div class="output-box" style="margin-top: 15px;">
+                    <h3>Winners List</h3>
+                    <div id="winners-output-content"></div>
+                </div>
+            </div>
+
+            <!-- Google Sheet Link Input - Cannot implement automatic reading/writing to Google Sheets -->
+            <!--
+            <div class="spreadsheet-link-input" style="margin-top: 15px;">
+                <h4>Google Sheet Link (Manual Copy/Paste)</h4>
+                <input type="text" id="google-sheet-link" placeholder="Paste your Google Sheet link here" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                <p class="instruction-text">Due to technical limitations, the tool cannot directly read or write to Google Sheets. Please manually copy the output and paste it into your spreadsheet.</p>
+            </div>
+            -->
+
+            <!-- Flag Meaning Inputs -->
+            <div class="flag-meanings-container" id="flag-meanings-container" style="display: none; margin-top: 20px;">
+                <h4>Define Flag Meanings (Optional)</h4>
+                <p class="instruction-text">Define the meaning for Flags 1-5. Flag 0 is always "Store-Bought".</p>
+                <div class="flag-input-group">
+                    <label for="flag-meaning-1">Flag 1 Meaning:</label>
+                    <input type="text" id="flag-meaning-1" placeholder="e.g., Bonus from Event A">
+                </div>
+                <div class="flag-input-group" style="margin-top: 10px;">
+                    <label for="flag-meaning-2">Flag 2 Meaning:</label>
+                    <input type="text" id="flag-meaning-2" placeholder="e.g., Manual Adjustment">
+                </div>
+                <div class="flag-input-group" style="margin-top: 10px;">
+                    <label for="flag-meaning-3">Flag 3 Meaning:</label>
+                    <input type="text" id="flag-meaning-3" placeholder="Meaning for Flag 3">
+                </div>
+                <div class="flag-input-group" style="margin-top: 10px;">
+                    <label for="flag-meaning-4">Flag 4 Meaning:</label>
+                    <input type="text" id="flag-meaning-4" placeholder="Meaning for Flag 4">
+                </div>
+                <div class="flag-input-group" style="margin-top: 10px;">
+                    <label for="flag-meaning-5">Flag 5 Meaning:</label>
+                    <input type="text" id="flag-meaning-5" placeholder="Meaning for Flag 5">
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
